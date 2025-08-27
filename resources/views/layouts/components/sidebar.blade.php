@@ -1,6 +1,21 @@
+@php
+    $menus = [
+        [
+            'title' => 'Dashboard',
+            'icon' => 'bi bi-speedometer',
+            'route' => route('dashboard'),
+        ],
+        [
+            'title' => 'Products',
+            'icon' => 'bi bi-box',
+            'route' => route('products.index'),
+        ],
+    ];
+@endphp
+
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
     <div class="sidebar-brand">
-        <a href="./index.html" class="brand-link">
+        <a href="{{ route('dashboard') }}" class="brand-link">
             <img src="{{ asset('Templates/dist/assets/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
                 class="brand-image opacity-75 shadow" />
             <span class="brand-text fw-light">Inventory Management</span>
@@ -10,14 +25,14 @@
         <nav class="mt-2">
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation"
                 aria-label="Main navigation" data-accordion="false" id="navigation">
-                <li class="nav-item">
-                    <a href="#" class="nav-link active">
-                        <i class="nav-icon bi bi-speedometer"></i>
-                        <p>
-                            Dashboard
-                        </p>
-                    </a>
-                </li>
+                @foreach ($menus as $menu)
+                    <li class="nav-item">
+                        <a href="{{ $menu['route'] }}" class="nav-link {{ request()->url() === $menu['route'] ? 'active' : '' }}">
+                            <i class="nav-icon {{ $menu['icon'] }}"></i>
+                            <p>{{ $menu['title'] }}</p>
+                        </a>
+                    </li>
+                @endforeach
             </ul>
         </nav>
     </div>
