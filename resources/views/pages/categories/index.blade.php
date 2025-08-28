@@ -56,9 +56,14 @@
                                     </td>
                                     <td>
                                         @if (!$category->deleted_at)
-                                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-warning me-1" title="Edit">
+                                            <button type="button" class="btn btn-sm btn-warning me-1 edit-category-btn"
+                                                data-id="{{ $category->id }}"
+                                                data-name="{{ $category->name }}"
+                                                data-description="{{ $category->description }}"
+                                                data-image="{{ asset('uploads/' . $category->image) }}"
+                                                title="Edit">
                                                 <i class="bi bi-pencil-square"></i>
-                                            </a>
+                                            </button>
                                             <form action="{{ route('categories.softDelete', $category->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
@@ -128,7 +133,46 @@
             </div>
         </div>
     </div>
+
+    <!-- Edit Category Modal -->
+    <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="edit-category-form" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PATCH')
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="edit-name" class="form-label">Category Name</label>
+                            <input type="text" name="name" id="edit-name" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-image" class="form-label">Category Image</label>
+                            <div class="d-flex justify-content-center mb-2">
+                                <img src="" alt="Category Image Preview" id="edit-image-preview" class="img-fluid" style="display: none; height: 120px; object-fit: cover;">
+                            </div>
+                            <input type="file" name="image" id="edit-image" class="form-control" accept="image/*">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-description" class="form-label">Description</label>
+                            <textarea name="description" id="edit-description" class="form-control" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Image preview for add
         document.getElementById('image').addEventListener('change', function(event) {
             const [file] = event.target.files;
             const preview = document.getElementById('image-preview');
@@ -139,6 +183,44 @@
                 preview.src = '';
                 preview.style.display = 'none';
             }
+        });
+
+        // Image preview for edit
+        document.getElementById('edit-image').addEventListener('change', function(event) {
+            const [file] = event.target.files;
+            const preview = document.getElementById('edit-image-preview');
+            if (file) {
+                preview.src = URL.createObjectURL(file);
+                preview.style.display = 'block';
+            }
+        });
+
+        // Handle edit button click
+        document.querySelectorAll('.edit-category-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const name = this.getAttribute('data-name');
+                const description = this.getAttribute('data-description');
+                const image = this.getAttribute('data-image');
+
+                document.getElementById('edit-name').value = name;
+                document.getElementById('edit-description').value = description;
+                const preview = document.getElementById('edit-image-preview');
+                if (image) {
+                    preview.src = image;
+                    preview.style.display = 'block';
+                } else {
+                    preview.src = '';
+                    preview.style.display = 'none';
+                }
+
+                // Set form action
+                document.getElementById('edit-category-form').action = '/categories/' + id;
+
+                // Show modal
+                var editModal = new bootstrap.Modal(document.getElementById('editCategoryModal'));
+                editModal.show();
+            });
         });
     </script>
 @endsection
