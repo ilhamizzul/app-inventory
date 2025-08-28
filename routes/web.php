@@ -2,10 +2,11 @@
 
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', [ProductController::class, 'index'])->name('dashboard');
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::prefix('products')->name('products.')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('index');
