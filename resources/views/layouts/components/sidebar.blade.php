@@ -10,6 +10,11 @@
             'icon' => 'bi bi-box',
             'route' => route('products.index'),
         ],
+        [
+            'title' => 'Categories',
+            'icon' => 'bi bi-tags',
+            'route' => route('categories.index'),
+        ],
     ];
 @endphp
 

@@ -24,7 +24,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::whereNull('deleted_at')->get();
         return view('pages.products.create', compact('categories'));
     }
 
@@ -52,7 +52,7 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $product = Product::findOrFail($id);
-        $categories = Category::all();
+        $categories = Category::whereNull('deleted_at')->get();
         return view('pages.products.edit', compact('product', 'categories'));
     }
 
