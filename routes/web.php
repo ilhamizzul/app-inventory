@@ -10,7 +10,10 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('auth')->name('auth.')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('loginForm');
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('registerForm');
-    // Add other auth routes like register, logout, etc.
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    // Add other auth routes like logout, etc.
 });
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
