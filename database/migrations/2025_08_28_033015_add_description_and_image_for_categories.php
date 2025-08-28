@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('categories', function (Blueprint $table) {
             $table->text('description')->nullable();
             $table->string('image')->nullable();
+            $table->softDeletes();
         });
     }
 
@@ -25,6 +26,7 @@ return new class extends Migration
         Schema::table('categories', function (Blueprint $table) {
             $table->dropColumn('description');
             $table->dropColumn('image');
+            $table->dropSoftDeletes();
         });
     }
 };

@@ -14,15 +14,21 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         Category::create([
-            'name' => 'Electronics'
+            'name' => 'Electronics',
+            'description' => 'Devices and gadgets',
+            'image' => 'categories/default.jpg'
         ]);
 
         Category::create([
-            'name' => 'Furniture'
+            'name' => 'Furniture',
+            'description' => 'Home and office furniture',
+            'image' => 'categories/default.jpg'
         ]);
 
         Category::create([
-            'name' => 'Clothing'
+            'name' => 'Clothing',
+            'description' => 'Men and women clothing',
+            'image' => 'categories/default.jpg'
         ]);
     }
 }
