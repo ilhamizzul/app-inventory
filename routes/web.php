@@ -2,9 +2,16 @@
 
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
+
+Route::prefix('auth')->name('auth.')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('loginForm');
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('registerForm');
+    // Add other auth routes like register, logout, etc.
+});
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
