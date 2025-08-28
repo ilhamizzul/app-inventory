@@ -48,7 +48,7 @@
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->description }}</td>
                                     <td>{{ $product->stock_keeping_unit }}</td>
-                                    <td>{{ $product->category->name }}</td>
+                                    <td>{{ $product->category->name ?? '-' }}</td>
                                     <td>${{ number_format($product->price, 2) }}</td>
                                     <td>{{ $product->quantity_in_stock }}</td>
                                     <td>
