@@ -13,4 +13,13 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->stock_keeping_unit = 'SKU-' . strtoupper(uniqid());
+        });
+    }
 }
