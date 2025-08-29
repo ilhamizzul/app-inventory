@@ -7,8 +7,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * Class AuthController
+ *
+ * Handles user authentication, registration, and logout.
+ */
 class AuthController extends Controller
 {
+    /**
+     * Show the login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function showLoginForm()
     {
         if (Auth::check()) {
@@ -16,6 +26,13 @@ class AuthController extends Controller
         }
         return view('pages.auth.login');
     }
+
+    /**
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function login(Request $request)
     {
         if (Auth::check()) {
@@ -40,6 +57,11 @@ class AuthController extends Controller
         ])->withInput();
     }
 
+    /**
+     * Show the registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function showRegisterForm()
     {
         if (Auth::check()) {
@@ -48,6 +70,12 @@ class AuthController extends Controller
         return view('pages.auth.register');
     }
 
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function register(Request $request)
     {
         if (Auth::check()) {
@@ -74,6 +102,12 @@ class AuthController extends Controller
         return redirect()->intended(route('dashboard'));
     }
 
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function logout(Request $request)
     {
         Auth::logout();
