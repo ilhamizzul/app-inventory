@@ -11,10 +11,16 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
+        if (Auth::check()) {
+            return back();
+        }
         return view('pages.auth.login');
     }
     public function login(Request $request)
     {
+        if (Auth::check()) {
+            return back();
+        }
         // Validate the request data
         $credentials = $request->validate([
             'email' => 'required|email',
@@ -36,11 +42,17 @@ class AuthController extends Controller
 
     public function showRegisterForm()
     {
+        if (Auth::check()) {
+            return back();
+        }
         return view('pages.auth.register');
     }
 
     public function register(Request $request)
     {
+        if (Auth::check()) {
+            return back();
+        }
         // Validate the request data
         $data = $request->validate([
             'name' => 'required|string|max:255',
